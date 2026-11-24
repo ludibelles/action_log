@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Action Log</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- Full-screen transparent wrapper; pointer-events on children only -->
+<div id="app" class="hidden">
+
+    <!-- ===================== Right-side panel ===================== -->
+    <div id="right-panel">
+
+        <!-- Tracker -->
+        <div id="tracker">
+            <div id="tracker-header">
+                <div id="encounter-badge" class="badge inactive">INACTIVE</div>
+                <div id="round-label"></div>
+                <button id="btn-close" title="Close (Esc)">&#x2715;</button>
+            </div>
+
+            <div id="initiative-list">
+                <div id="initiative-empty">No initiative rolled yet</div>
+            </div>
+
+            <div id="timer-section" class="hidden">
+                <div id="timer-label">TIME REMAINING</div>
+                <div id="timer-display">05:00</div>
+                <div id="timer-bar"><div id="timer-fill"></div></div>
+            </div>
+        </div>
+
+        <!-- Action panel -->
+        <div id="action-panel">
+
+            <!-- Start / End buttons (always visible when panel is open) -->
+            <div id="encounter-controls">
+                <button id="btn-start-encounter" class="btn btn-primary">&#x2694;&#xFE0F; Start Encounter</button>
+                <button id="btn-end-encounter"   class="btn btn-danger hidden">&#x1F3C1; End Encounter</button>
+            </div>
+
+            <!-- Initiative form: shown when encounter is active and player hasn't rolled -->
+            <div id="init-form" class="form-section hidden">
+                <div class="form-title">Roll Initiative</div>
+                <div class="form-row">
+                    <label for="init-dex">Dexterity</label>
+                    <input id="init-dex" type="number" min="1" max="10" placeholder="1&#8211;10">
+                </div>
+                <div class="form-row">
+                    <label for="init-wits">Wits</label>
+                    <input id="init-wits" type="number" min="1" max="10" placeholder="1&#8211;10">
+                </div>
+                <div class="form-row">
+                    <label for="init-reason">Reason <span class="optional">(optional)</span></label>
+                    <input id="init-reason" type="text" placeholder="e.g. surprised attack">
+                </div>
+                <button id="btn-roll-init" class="btn btn-accent">&#x1F3B2; Roll Initiative</button>
+            </div>
+
+            <!-- Roll form: shown only when it is this player's turn -->
+            <div id="roll-form" class="form-section hidden">
+                <div class="form-title">Your Turn</div>
+                <div class="form-row">
+                    <label for="roll-pool">Dice Pool</label>
+                    <input id="roll-pool" type="number" min="1" max="30" placeholder="number of dice">
+                </div>
+                <div class="form-row">
+                    <label for="roll-diff">Difficulty</label>
+                    <input id="roll-diff" type="number" min="2" max="10" value="6">
+                </div>
+                <div class="form-row">
+                    <label for="roll-reason">Reason</label>
+                    <input id="roll-reason" type="text" placeholder="what are you doing?">
+                </div>
+                <div class="btn-row">
+                    <button id="btn-roll"     class="btn btn-accent">&#x1F3B2; Roll</button>
+                    <button id="btn-end-turn" class="btn btn-secondary">&#x23F9; End Turn</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- end right-panel -->
+
+    <!-- ===================== Roll result popup ===================== -->
+    <div id="roll-popup" class="hidden">
+        <div id="popup-inner">
+            <div id="popup-player-name"></div>
+            <div id="popup-reason"></div>
+            <div id="popup-dice-row"></div>
+            <div id="popup-stats"></div>
+            <div id="popup-result-banner"></div>
+            <div id="popup-subtext"></div>
+        </div>
+    </div>
+
+    <!-- ===================== Banners ===================== -->
+    <div id="your-turn-banner" class="hidden">
+        <div class="banner-text">YOUR TURN</div>
+    </div>
+    <div id="skipped-banner" class="hidden">
+        <div class="banner-text">SKIPPED</div>
+    </div>
+
+    <!-- ===================== Notifications ===================== -->
+    <div id="notifications"></div>
+
+    <!-- ===================== End-encounter confirmation ===================== -->
+    <div id="confirm-overlay" class="hidden">
+        <div id="confirm-box">
+            <div id="confirm-title">End Encounter?</div>
+            <div id="confirm-text">This will clear all timers and initiative. This cannot be undone.</div>
+            <div class="btn-row">
+                <button id="confirm-yes" class="btn btn-danger">End It</button>
+                <button id="confirm-no"  class="btn btn-secondary">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- end #app -->
+
+<script src="script.js"></script>
+</body>
+</html>
